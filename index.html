@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kandang Cerita – Petualangan Menulis Cerpen</title>
+<meta name="description" content="Game menulis cerpen untuk siswa SMK Agribisnis Ternak Unggas, terintegrasi 5 kompetensi sosial emosional CASEL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff6e3;--bg2:#ffeccb;--card:#fffdf8;--tx:#3a2a1d;--mu:#7b6650;--red:#c0492f;--red2:#9e3a24;--yel:#f6b73c;--grn:#3f8f5b;--grn2:#2c6e43;--sky:#d9efe6;--bd:#ecd9b8;--sh:0 6px 0 rgba(120,80,30,.14);--r:20px}
+@media (prefers-color-scheme:dark){:root{--bg:#1f1a14;--bg2:#2a2219;--card:#2d251b;--tx:#f7ecd9;--mu:#c3ae8c;--red:#e5694d;--red2:#f08469;--yel:#f6b73c;--grn:#5fc088;--grn2:#7ad6a1;--sky:#233a30;--bd:#4a3d2b;--sh:0 6px 0 rgba(0,0,0,.35)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Nunito,system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;min-height:100vh;
+background-image:radial-gradient(circle at 12% 8%,rgba(246,183,60,.18),transparent 40%),radial-gradient(circle at 90% 90%,rgba(63,143,91,.14),transparent 45%)}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:.2em 0;line-height:1.2}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px 80px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 0;position:sticky;top:0;z-index:5;background:linear-gradient(var(--bg) 80%,transparent)}
+.brand{font-family:Fredoka;font-weight:700;font-size:1.2rem;color:var(--red);display:flex;gap:8px;align-items:center;cursor:pointer}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:var(--card);border:2px solid var(--bd);border-radius:99px;padding:3px 12px;font-weight:800;font-size:.85rem}
+.card{background:var(--card);border:2px solid var(--bd);border-radius:var(--r);padding:20px;margin:14px 0;box-shadow:var(--sh)}
+.hero{text-align:center;padding:28px 18px;background:linear-gradient(160deg,var(--card),var(--bg2))}
+.hero .big{font-size:4.2rem;line-height:1;animation:bob 2.4s ease-in-out infinite;display:inline-block}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-4deg)}}
+.hero h1{font-size:2.3rem;color:var(--red)}
+.btn{font:inherit;font-weight:800;cursor:pointer;border:2px solid var(--bd);background:var(--card);color:var(--tx);border-radius:14px;padding:10px 16px;margin:4px 6px 4px 0;transition:.15s;box-shadow:0 3px 0 rgba(120,80,30,.15)}
+.btn:hover{transform:translateY(-2px);border-color:var(--yel)}.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.pri{background:var(--red);color:#fff;border-color:var(--red2)}
+.btn.grn{background:var(--grn);color:#fff;border-color:var(--grn2)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sel{background:var(--yel);border-color:#d8951c;color:#3a2a1d}
+input[type=text],textarea{width:100%;font:inherit;padding:12px 14px;border-radius:14px;border:2px solid var(--bd);background:var(--bg);color:var(--tx)}
+input:focus,textarea:focus{outline:3px solid var(--yel);border-color:var(--yel)}
+textarea{min-height:140px;resize:vertical;line-height:1.7}
+.mu{color:var(--mu);font-size:.92rem}
+.moods{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin:10px 0}
+.moods .btn{margin:0;text-align:center}
+.moods .btn span{display:block;font-size:1.8rem}
+/* path */
+.path{display:grid;gap:12px;margin-top:10px}
+.node{display:flex;align-items:center;gap:14px;border:2px solid var(--bd);border-radius:18px;padding:12px 14px;background:var(--card);cursor:pointer;transition:.15s;text-align:left;font:inherit;color:inherit;width:100%}
+.node:hover:not(:disabled){transform:translateX(4px);border-color:var(--yel)}
+.node .ic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:1.9rem;background:var(--bg2);flex:none}
+.node.done{background:var(--sky)}.node.cur{border-color:var(--red);box-shadow:var(--sh)}
+.node:disabled{opacity:.5;cursor:not-allowed}
+.node b{font-family:Fredoka;font-size:1.05rem}
+/* scene */
+.scene{border-radius:18px;padding:22px 16px;text-align:center;font-size:2.4rem;letter-spacing:6px;background:linear-gradient(180deg,#bfe6f5 0%,#e9f7d8 62%,#a4cf7d 62%,#8cbf63 100%);margin-bottom:14px;position:relative;overflow:hidden;min-height:110px}
+@media (prefers-color-scheme:dark){.scene{filter:brightness(.78)}}
+.scene .cap{position:absolute;left:10px;bottom:6px;font-size:.78rem;letter-spacing:0;background:rgba(255,255,255,.85);color:#3a2a1d;padding:2px 10px;border-radius:99px;font-weight:800}
+.tag{display:inline-block;border-radius:99px;padding:3px 12px;font-weight:800;font-size:.8rem;color:#fff;background:var(--grn)}
+.story{border-left:6px solid var(--yel);padding:6px 14px;background:var(--bg2);border-radius:0 14px 14px 0;margin:10px 0;font-size:1.02rem}
+.opt{display:block;width:100%;text-align:left;margin:8px 0}
+.fb{display:none;margin-top:10px;padding:12px 14px;border-radius:14px;background:var(--sky);font-weight:700}
+.fb.show{display:block;animation:pop .3s}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+.meters{display:grid;gap:8px;margin:8px 0}
+.m{display:grid;grid-template-columns:110px 1fr 34px;gap:8px;align-items:center;font-weight:800;font-size:.85rem}
+.m i{display:block;height:12px;border-radius:99px;background:var(--bd);overflow:hidden}
+.m i b{display:block;height:100%;border-radius:99px;transition:width .6s}
+.starters{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.starters .btn{font-size:.85rem;padding:5px 11px;margin:0;font-weight:700}
+.cnt{display:flex;justify-content:space-between;font-size:.85rem;color:var(--mu);font-weight:700}
+.prog{height:12px;border-radius:99px;background:var(--bd);overflow:hidden;margin:6px 0 2px}
+.prog b{display:block;height:100%;background:linear-gradient(90deg,var(--yel),var(--grn));transition:width .5s}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.badge{width:96px;text-align:center;font-size:.76rem;font-weight:800}
+.badge span{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 4px;border-radius:50%;background:var(--yel);font-size:1.9rem;border:3px solid #d8951c}
+.badge.off span{background:var(--bd);filter:grayscale(1);opacity:.5;border-color:var(--bd)}
+pre.cerpen{white-space:pre-wrap;font-family:Georgia,serif;font-size:1.05rem;line-height:1.85;background:var(--bg2);padding:16px;border-radius:14px}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.confetti i{position:absolute;top:-20px;font-style:normal;font-size:1.4rem;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:.8}}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:800;z-index:60}
+@media print{header.top,.noprint,.btn,.confetti{display:none!important}body{background:#fff;color:#000}.card{box-shadow:none;border:none}}
+@media (max-width:520px){.m{grid-template-columns:90px 1fr 30px}.hero h1{font-size:1.8rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand" id="home">🐔 Kandang Cerita</div><div class="chips" id="hud"></div></header>
+<main id="app"></main>
+</div>
+<script>
+"use strict";
+var MOODS=[["😄","Senang"],["😌","Tenang"],["😟","Cemas"],["😞","Sedih"],["😠","Kesal"],["😩","Lelah"]];
+var STAGES=[
+{k:"SA",m:10,ic:"🪞",title:"Pos 1 · Kenali Perasaan",kse:"Self-Awareness",cap:"Kandang B, pukul 16.40",scene:"🏫 🎒 😮‍💨 🐔 🐔",
+ story:"Raka baru pulang praktik. Di grup kelas, ada kabar: projek Bahasa Indonesia harus dikumpulkan besok. Di kandang B, 40 ayam petelur tampak lesu, dan punggungnya pegal. Dadanya terasa sesak.",
+ q:"Apa yang paling mungkin sedang dirasakan Raka?",
+ opts:[["Cemas dan kewalahan, karena tuntutan datang bersamaan",{e:-5,h:0,t:10},"Tepat. Menamai emosi dengan jelas adalah langkah pertama mengelolanya."],["Marah pada semua orang",{e:-10,h:-5,t:0},"Bisa jadi ada kesal, tapi coba cari emosi di balik kesal itu: apa yang membuatnya begitu?"],["Tidak merasakan apa-apa",{e:-5,h:0,t:-5},"Tubuh Raka memberi tanda (dada sesak, pegal). Emosi sering hadir lewat tubuh."]],
+ task:"Tulis 4–5 kalimat pembuka cerpen. Tunjukkan perasaan Raka lewat tubuh dan pikirannya (show, don't tell), jangan hanya menulis 'Raka cemas'.",
+ starters:["Dada Raka terasa sesak ketika…","Tangannya gemetar saat memegang…","Dalam kepalanya berputar pikiran…","Bau pakan dan debu kandang sore itu…"],min:30},
+{k:"SM",m:11,ic:"🌬️",title:"Pos 2 · Tenangkan Diri",kse:"Self-Management",cap:"Di samping tempat pakan",scene:"🪣 😤 🌾 🐓",
+ story:"Raka nyaris membanting ember pakan karena kesal. Tapi ia ingat latihan napas dari guru. Ia punya beberapa cara untuk menenangkan diri sebelum bertindak.",
+ q:"Strategi regulasi emosi mana yang akan dipilih Raka?",
+ opts:[["Napas 4-4-6: tarik 4 hitungan, tahan 4, buang 6",{e:15,h:0,t:10},"Napas panjang menenangkan sistem saraf. Coba lakukan 3 putaran bersama teman sekelompokmu!"],["Berhenti 2 menit, minum air, lalu menulis daftar tugas",{e:10,h:0,t:15},"Jeda lalu menata prioritas. Cara yang pas untuk tugas yang menumpuk."],["Melampiaskan dengan membentak ayam",{e:-10,h:-10,t:-10},"Melampiaskan ke makhluk lain tidak menyelesaikan masalah, dan ayam bisa stres juga. Coba pilih ulang strategi lain."],["Berkata pada diri: boleh lelah, satu langkah kecil dulu",{e:12,h:5,t:10},"Afirmasi diri yang ramah. Tidak perlu sempurna, cukup mulai."]],
+ task:"Tulis 4–6 kalimat adegan Raka menerapkan strategi itu dan apa yang berubah di tubuh serta pikirannya.",
+ starters:["Raka memejamkan mata dan…","Perlahan napasnya…","Pikirannya yang tadi kusut mulai…","Ia berbisik pada dirinya sendiri,"],min:35},
+{k:"SoA",m:11,ic:"👀",title:"Pos 3 · Lihat Sudut Pandang Lain",kse:"Social Awareness",cap:"Bangku dekat gudang pakan",scene:"🥪 😔 🐤 🤝",
+ story:"Sari, sahabat Raka, duduk murung dan tidak menyentuh bekalnya. Biasanya ia paling ceria. Raka ingin tahu tanpa menghakimi.",
+ q:"Apa yang sebaiknya Raka pikirkan lebih dulu tentang Sari?",
+ opts:[["Mungkin Sari sedang punya beban yang tidak ia ceritakan",{e:0,h:15,t:5},"Empati dimulai dari membuka kemungkinan, bukan menebak pasti."],["Sari pasti malas dan cari perhatian",{e:0,h:-15,t:0},"Label seperti ini menutup pintu persahabatan. Coba pikirkan alasan lain."],["Itu bukan urusan Raka",{e:-5,h:-10,t:-5},"Peduli bukan berarti ikut campur. Kita boleh menawarkan kehadiran."]],
+ task:"Tulis 4–6 kalimat adegan Raka mengamati Sari (ekspresi, sikap tubuh) dan menebak perasaannya dengan hati-hati.",
+ starters:["Raka memperhatikan bahu Sari yang…","Mata Sari tampak…","Mungkin saja Sari merasa…","Raka teringat saat dirinya sendiri…"],min:35},
+{k:"RS",m:12,ic:"💬",title:"Pos 4 · Bangun Percakapan",kse:"Relationship Skills",cap:"Duduk berdampingan",scene:"👦 💬 👧 🌾",
+ story:"Raka ingin mendekat. Cara ia membuka percakapan akan menentukan apakah Sari mau bercerita atau malah menutup diri.",
+ q:"Kalimat pembuka mana yang paling menguatkan?",
+ opts:[["“Aku lihat kamu kelihatan capek. Mau kutemani sambil cek ayam?”",{e:5,h:20,t:5},"Kalimat 'aku' + tawaran bantuan membuat Sari merasa aman, bukan dihakimi."],["“Kamu kenapa sih dari tadi diam saja?”",{e:0,h:-5,t:0},"Nada menuntut bisa membuat orang bertahan diam. Coba versi yang lebih lembut."],["“Semua orang juga capek, jangan lebay.”",{e:-5,h:-20,t:-5},"Meremehkan perasaan membuat orang menutup diri. Pilih ulang kalimatmu."]],
+ task:"Tulis dialog 5–8 baris antara Raka dan Sari. Gunakan mendengarkan aktif (mengulang, menanyakan, mengangguk) dan tanda baca dialog yang benar.",
+ starters:["— Aku lihat kamu kelihatan capek, Sar, — kata Raka pelan.","Sari menghela napas, lalu…","— Jadi maksudmu…, — Raka mengulang.","— Terima kasih sudah mau dengar, — ujar Sari."],min:40},
+{k:"DM",m:11,ic:"🧭",title:"Pos 5 · Ambil Keputusan Bijak",kse:"Responsible Decision-Making",cap:"Menjelang magrib",scene:"🌇 🐔 📚 ⚖️",
+ story:"Kandang butuh perawatan, tugas projek menunggu, dan Raka serta Sari sama-sama lelah. Waktu hampir habis. Keputusan apa yang akan mereka ambil?",
+ q:"Pilih keputusan yang paling bertanggung jawab:",
+ opts:[["Membagi tugas, meminta waktu tambahan pada guru, istirahat bergantian",{e:15,h:15,t:25},"Mempertimbangkan kesehatan, tanggung jawab, dan orang lain. Keputusan yang matang."],["Mengabaikan kandang dan begadang menyelesaikan tugas",{e:-20,h:-5,t:-10},"Hewan dan dirimu sama-sama butuh perawatan. Coba cari jalan tengah."],["Menyontek projek teman agar cepat selesai",{e:-5,h:-20,t:-30},"Jalan pintas merugikan dirimu dan temanmu. Pikirkan akibat jangka panjangnya, lalu pilih ulang."]],
+ task:"Tulis 5–7 kalimat klimaks dan akhir cerita: apa yang dilakukan, apa akibatnya, dan apa yang dipelajari Raka (amanat disampaikan tersirat).",
+ starters:["Setelah berpikir sejenak, Raka berkata,","Akibatnya, keesokan harinya…","Sore itu Raka belajar bahwa…","Di ujung senja, ayam-ayam…"],min:45}
+];
+var DEF={step:"intro",nama:"",mood0:"",mood1:"",done:[],pick:{},txt:{},judul:"",fx:{e:50,h:50,t:50},refl:"",pf:""};
+var S=JSON.parse(JSON.stringify(DEF));
+try{var raw=localStorage.getItem("kc3");if(raw){var o=JSON.parse(raw);if(o&&o.fx)S=Object.assign(S,o)}}catch(e){}
+function save(){try{localStorage.setItem("kc3",JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function wc(s){return (String(s||"").trim().match(/\S+/g)||[]).length}
+function clamp(n){return Math.max(0,Math.min(100,n))}
+function $(s){return document.querySelector(s)}
+function go(step){S.step=step;save();render();window.scrollTo({top:0,behavior:"smooth"})}
+function toast(m){var t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2200)}
+function confetti(){var c=document.createElement("div");c.className="confetti";var e=["🌟","🥚","🐥","🌾","✨","🎉"];for(var i=0;i<34;i++){var p=document.createElement("i");p.textContent=e[i%e.length];p.style.left=Math.random()*100+"%";p.style.animationDelay=Math.random()*.8+"s";c.appendChild(p)}document.body.appendChild(c);setTimeout(function(){c.remove()},3800)}
+function hud(){var n=S.done.length;$("#hud").innerHTML='<span class="pill">⭐ '+n+'/5 pos</span>'+(S.nama?'<span class="pill">👤 '+esc(S.nama)+'</span>':'')}
+function meters(){var L=[["⚡ Energi","e","#f6b73c"],["🤝 Hubungan","h","#c0492f"],["📘 Tanggung jawab","t","#3f8f5b"]];return '<div class="meters">'+L.map(function(m){return '<div class="m"><span>'+m[0]+'</span><i><b style="width:'+S.fx[m[1]]+'%;background:'+m[2]+'"></b></i><span>'+S.fx[m[1]]+'</span></div>'}).join("")+'</div>'}
+function badges(){return '<div class="badges">'+STAGES.map(function(s,i){var on=S.done.indexOf(i)>-1;return '<div class="badge '+(on?"":"off")+'"><span>'+s.ic+'</span>'+s.kse+'</div>'}).join("")+'</div>'}
+function moodGrid(key){return '<div class="moods">'+MOODS.map(function(m){var v=m[0]+" "+m[1];return '<button class="btn '+(S[key]===v?"sel":"")+'" data-act="mood" data-key="'+key+'" data-v="'+v+'"><span>'+m[0]+'</span>'+m[1]+'</button>'}).join("")+'</div>'}
+
+function viewIntro(){return '<section class="card hero"><div class="big">🐔</div><h1>Kandang Cerita</h1><p>Bantu <b>Raka</b>, siswa Agribisnis Ternak Unggas, melewati hari yang berat di kandang dan sekolah. Di setiap pos kamu melatih satu kompetensi sosial emosional, lalu menulis satu bagian cerpenmu.</p><p class="mu">🔒 Ruang aman: tidak ada jawaban salah. Tulisanmu hanya tersimpan di perangkat ini.</p></section>'+
+'<section class="card"><h3>1. Siapa namamu?</h3><input type="text" id="nm" maxlength="30" placeholder="Nama panggilan" value="'+esc(S.nama)+'"><h3 style="margin-top:16px">2. Perasaanmu hari ini?</h3>'+moodGrid("mood0")+'<button class="btn pri" data-act="start">Mulai Petualangan →</button></section>'}
+function viewMap(){var cur=S.done.length;var h='<section class="card"><h2>Peta Petualangan</h2><p class="mu">Selesaikan pos berurutan. Setiap pos membuka satu lencana. Rancangan satu pertemuan (4 JP · 180 menit): kelima pos ± 55 menit, dengan jeda napas 2 menit di antara pos.</p><div class="prog"><b style="width:'+(S.done.length/5*100)+'%"></b></div><div class="path">';
+STAGES.forEach(function(s,i){var d=S.done.indexOf(i)>-1,c=i===cur;h+='<button class="node '+(d?"done":"")+(c?" cur":"")+'" '+(i>cur?"disabled":"")+' data-act="open" data-i="'+i+'"><div class="ic">'+(d?"✅":s.ic)+'</div><div><b>'+s.title+'</b><div class="mu">'+s.kse+' · ⏱ ±'+s.m+' menit</div></div></button>'});
+h+='</div><button class="btn" style="margin-top:12px" data-act="breath">🌬️ Jeda napas 4-4-6</button></section><section class="card"><h3>Lencana</h3>'+badges()+meters()+'</section>';
+if(cur===5)h+='<section class="card hero"><div class="big">🥚</div><h2>Semua pos selesai!</h2><button class="btn grn" data-act="finish">Lihat Cerpenku →</button></section>';return h}
+function viewStage(i){var s=STAGES[i],p=S.pick[i],t=S.txt[i]||"",done=S.done.indexOf(i)>-1;
+var h='<section class="card"><span class="tag">'+s.kse+'</span> <span class="pill">⏱ ±'+s.m+' menit</span><h2>'+s.title+'</h2><div class="scene">'+s.scene+'<span class="cap">'+esc(s.cap)+'</span></div><div class="story">'+s.story+'</div><h3>🧩 '+s.q+'</h3>';
+s.opts.forEach(function(o,j){h+='<button class="btn opt '+(p===j?"sel":"")+'" data-act="pick" data-i="'+i+'" data-j="'+j+'">'+esc(o[0])+'</button>'});
+h+='<div class="fb '+(p!=null?"show":"")+'" id="fb">'+(p!=null?esc(s.opts[p][2]):"")+'</div>'+meters()+'</section>';
+h+='<section class="card"><h3>✍️ Tulis bagian cerpenmu</h3><p>'+s.task+'</p><div class="mu">Butuh ide? Klik untuk menambah pembuka kalimat:</div><div class="starters">'+s.starters.map(function(x,k){return '<button class="btn" data-act="starter" data-i="'+i+'" data-k="'+k+'">'+esc(x)+'</button>'}).join("")+'</div><textarea id="ta" data-i="'+i+'" placeholder="Mulai menulis di sini…">'+esc(t)+'</textarea><div class="cnt"><span id="wc">'+wc(t)+' kata (minimal '+s.min+')</span><span>tersimpan otomatis</span></div>'+
+'<div style="margin-top:10px"><button class="btn" data-act="map">← Peta</button><button class="btn grn" id="fin" data-act="complete" data-i="'+i+'" '+((p!=null&&wc(t)>=s.min)?"":"disabled")+'>'+(done?"Perbarui & lanjut":"Selesaikan pos ⭐")+'</button></div></section>';return h}
+function viewFinish(){var all=STAGES.map(function(_,i){return S.txt[i]||""}).join("\n\n");var n=wc(all);
+return '<section class="card hero"><div class="big">🏆</div><h1>Misi Selesai!</h1><p>Kamu menulis <b>'+n+' kata</b> dan mengumpulkan semua lencana.</p>'+badges()+'</section>'+
+'<section class="card"><h3>Judul cerpenmu</h3><input type="text" id="jd" maxlength="70" placeholder="Misalnya: Senja di Kandang B" value="'+esc(S.judul)+'"><h2 style="margin-top:14px" id="jt">'+esc(S.judul||"Cerpen Tanpa Judul")+'</h2><div class="mu">Oleh '+esc(S.nama||"Siswa")+'</div><pre class="cerpen">'+esc(all)+'</pre><div class="noprint"><button class="btn pri" data-act="copy">📋 Salin</button><button class="btn" data-act="dl">⬇️ Unduh .txt</button><button class="btn" data-act="print">🖨️ Cetak</button><button class="btn" data-act="edit">✏️ Revisi</button></div></section>'+
+'<section class="card noprint"><h3>🪞 Refleksi & Check-out</h3><p><b>Bagaimana perasaanmu sekarang?</b></p>'+moodGrid("mood1")+(S.mood0&&S.mood1?'<p class="mu">Awal: '+esc(S.mood0)+' → sekarang: '+esc(S.mood1)+'</p>':'')+
+'<p><b>Satu strategi yang akan kupakai saat merasa kewalahan:</b></p><textarea id="rf" style="min-height:80px" placeholder="Aku akan…">'+esc(S.refl)+'</textarea></section>'+
+'<section class="card noprint"><h3>🤝 Kartu Umpan Balik Teman</h3><p class="mu">Tukar cerpen dengan temanmu, lalu isi dengan kalimat "aku" yang santun.</p><textarea id="pf" style="min-height:90px" placeholder="⭐ Bagian yang kusuka: …&#10;⭐ Hal lain yang kusuka: …&#10;🌱 Harapanku: …">'+esc(S.pf)+'</textarea></section>'+
+'<section class="card noprint"><button class="btn" data-act="reset">🔄 Mulai ulang dari awal</button></section>'}
+function render(){hud();var a=$("#app");if(S.step==="intro")a.innerHTML=viewIntro();else if(S.step==="map")a.innerHTML=viewMap();else if(S.step==="finish")a.innerHTML=viewFinish();else a.innerHTML=viewStage(+S.step)}
+var BT=null;
+function breath(){if(BT)return;var ph=[["Tarik napas…",4],["Tahan…",4],["Buang perlahan…",6]],o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:70;background:rgba(30,20,10,.88);color:#fff;display:grid;place-items:center;text-align:center;font-family:Fredoka,sans-serif";o.innerHTML='<div><div id="bc" style="width:140px;height:140px;border-radius:50%;background:#f6b73c;margin:0 auto 22px;transition:transform 4s ease-in-out"></div><div id="bt" style="font-size:2rem"></div><div id="bn" style="opacity:.8;margin-top:6px"></div><button class="btn" id="bx" style="margin-top:22px">Selesai</button></div>';document.body.appendChild(o);var i=0,c=0,round=1;
+function step(){var p=ph[i%3];$("#bt").textContent=p[0];$("#bn").textContent="Putaran "+round+" dari 3";var el=$("#bc");el.style.transitionDuration=p[1]+"s";el.style.transform=i%3===0?"scale(1.6)":(i%3===2?"scale(1)":el.style.transform);c++;BT=setTimeout(function(){i++;if(i%3===0)round++;if(round>3){end();return}step()},p[1]*1000)}
+function end(){clearTimeout(BT);BT=null;o.remove()}
+$("#bx").addEventListener("click",end);step()}
+function full(){return (S.judul||"Cerpen Tanpa Judul")+"\nOleh "+(S.nama||"Siswa")+"\n\n"+STAGES.map(function(_,i){return S.txt[i]||""}).join("\n\n")}
+document.addEventListener("click",function(ev){var b=ev.target.closest("[data-act]");if(!b)return;var a=b.dataset.act;
+if(b.id==="home"){return}
+if(a==="mood"){if(S.step==="intro"){var n=$("#nm");if(n)S.nama=n.value}S[b.dataset.key]=b.dataset.v;save();render();}
+else if(a==="start"){S.nama=($("#nm").value||"").trim();if(!S.nama||!S.mood0){toast("Isi nama dan pilih perasaanmu dulu ya");return}go("map")}
+else if(a==="open")go(+b.dataset.i);
+else if(a==="map")go("map");
+else if(a==="pick"){var i=+b.dataset.i,j=+b.dataset.j;if(S.pick[i]===j)return;if(S.pick[i]!=null){/* undo previous effect */var pe=STAGES[i].opts[S.pick[i]][1];S.fx.e=clamp(S.fx.e-pe.e);S.fx.h=clamp(S.fx.h-pe.h);S.fx.t=clamp(S.fx.t-pe.t)}
+ var fx=STAGES[i].opts[j][1];S.fx.e=clamp(S.fx.e+fx.e);S.fx.h=clamp(S.fx.h+fx.h);S.fx.t=clamp(S.fx.t+fx.t);S.pick[i]=j;save();var t=$("#ta");S.txt[i]=t?t.value:S.txt[i];save();render()}
+else if(a==="starter"){var ta=$("#ta"),st=STAGES[+b.dataset.i].starters[+b.dataset.k];ta.value+=(ta.value&&!/\s$/.test(ta.value)?" ":"")+st+" ";ta.focus();ta.dispatchEvent(new Event("input"))}
+else if(a==="complete"){var i2=+b.dataset.i;if(S.done.indexOf(i2)<0)S.done.push(i2);save();confetti();toast("Lencana "+STAGES[i2].kse+" didapat!");setTimeout(function(){go(S.done.length===5?"finish":"map")},900)}
+else if(a==="finish")go("finish");
+else if(a==="breath")breath();
+else if(a==="edit")go("map");
+else if(a==="copy"){try{navigator.clipboard.writeText(full());toast("Tersalin!")}catch(e){toast("Salin manual dari teks di atas")}}
+else if(a==="dl"){var bl=new Blob([full()],{type:"text/plain;charset=utf-8"}),u=URL.createObjectURL(bl),l=document.createElement("a");l.href=u;l.download="cerpen-"+(S.nama||"siswa").replace(/\s+/g,"-")+".txt";l.click();setTimeout(function(){URL.revokeObjectURL(u)},500)}
+else if(a==="print")window.print();
+else if(a==="reset"){if(confirm("Hapus semua tulisan dan mulai ulang?")){S=JSON.parse(JSON.stringify(DEF));save();render()}}
+});
+document.addEventListener("input",function(ev){var t=ev.target;
+if(t.id==="ta"){var i=+t.dataset.i;S.txt[i]=t.value;save();var n=wc(t.value);$("#wc").textContent=n+" kata (minimal "+STAGES[i].min+")";$("#fin").disabled=!(S.pick[i]!=null&&n>=STAGES[i].min)}
+else if(t.id==="jd"){S.judul=t.value;save();$("#jt").textContent=t.value||"Cerpen Tanpa Judul"}
+else if(t.id==="rf"){S.refl=t.value;save()}else if(t.id==="pf"){S.pf=t.value;save()}
+else if(t.id==="nm"){S.nama=t.value;save();hud()}});
+$("#home").addEventListener("click",function(){go(S.nama?"map":"intro")});
+if(S.step!=="intro"&&!S.nama)S.step="intro";
+render();
+</script>
+</body>
+</html>
